@@ -8,7 +8,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const hasStock = product.totalStock > 0;
-  const mainImage = product.images?.[0] || '/placeholder.jpg';
+  const mainImage = product.images?.default || Object.values(product.images || {})[0] || '/products/v400-mix.png';
 
   return (
     <Link to={`/produto/${product.slug}`} className="card-hover group">

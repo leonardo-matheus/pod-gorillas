@@ -37,7 +37,7 @@ export interface Product {
   description: string;
   price: number;
   puffs?: number;
-  images: string[];
+  images: Record<string, string>; // { default: string, [flavor]: string }
   flavors: string[];
   category: { id: string; name: string; slug: string };
   stock: { flavor: string; quantity: number }[];

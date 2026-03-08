@@ -69,7 +69,7 @@ export default function ProductDetail() {
       productId: product.id,
       name: product.name,
       price: product.price,
-      image: product.images?.[0] || '',
+      image: product.images?.[selectedFlavor] || product.images?.default || '',
       flavor: selectedFlavor,
       quantity,
     });
@@ -111,11 +111,11 @@ export default function ProductDetail() {
         {/* Image with flavor color overlay */}
         <div className="relative aspect-square bg-dark-900 rounded-3xl overflow-hidden group">
           <img
-            src={product.images?.[0] || '/products/vape-generic.png'}
-            alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            src={product.images?.[selectedFlavor] || product.images?.default || Object.values(product.images || {})[0] || '/products/v400-mix.png'}
+            alt={`${product.name} - ${selectedFlavor}`}
+            className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
             onError={(e) => {
-              (e.target as HTMLImageElement).src = '/products/vape-generic.png';
+              (e.target as HTMLImageElement).src = '/products/v400-mix.png';
             }}
           />
           {/* Flavor color overlay */}
