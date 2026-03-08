@@ -1,0 +1,162 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(uuid())
+  email       String?  @unique
+  password    String?
+  name        String?
+  role        String   @default("customer") // admin, customer
+  phone       String   @unique
+  cashback    Float    @default(0) // saldo de cashback
+  lgpdAccepted Boolean @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  orders      Order[]
+  cart        Cart?
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  name      String
+  slug      String    @unique
+  image     String?
+  order     Int       @default(0)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+}
+
+model Product {
+  id          String      @id @default(uuid())
+  name        String
+  slug        String      @unique
+  description String
+  price       Float
+  images      String      // JSON array de URLs
+  flavors     String      // JSON array de sabores disponíveis
+  puffs       Int?        // Quantidade de puffs (ex: 8000, 23000)
+  categoryId  String
+  category    Category    @relation(fields: [categoryId], references: [id])
+  active      Boolean     @default(true)
+  featured    Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  stock       Stock[]
+  cartItems   CartItem[]
+  orderItems  OrderItem[]
+}
+
+model Stock {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  flavor    String
+  quantity  Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([productId, flavor])
+}
+
+model Cart {
+  id        String     @id @default(uuid())
+  oderId    String?
+  oderId2   String?
+  userId    String?    @unique
+  user      User?      @relation(fields: [userId], references: [id])
+  sessionId String?    @unique // para carrinhos sem login
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+  cartId    String
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  flavor    String
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([cartId, productId, flavor])
+}
+
+model Order {
+  id             String      @id @default(uuid())
+  orderNumber    String      @unique
+  userId         String?
+  user           User?       @relation(fields: [userId], references: [id])
+  items          OrderItem[]
+  subtotal       Float
+  shipping       Float
+  cashbackUsed   Float       @default(0)
+  cashbackEarned Float       @default(0)
+  total          Float
+  status         String      @default("pending") // pending, confirmed, paid, preparing, ready, delivered, cancelled
+  paymentId      String?
+  paymentMethod  String      @default("pix")
+  pixCode        String?
+  pixQrCode      String?
+  customerName   String
+  customerPhone  String
+  customerEmail  String?
+  deliveryType   String      @default("delivery") // delivery, pickup
+  shippingCep    String?
+  shippingStreet String?
+  shippingNumber String?
+  shippingComp   String?
+  shippingNeigh  String?
+  shippingCity   String?
+  shippingState  String?
+  trackingCode   String?
+  notes          String?
+  confirmedAt    DateTime?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  name      String
+  price     Float
+  flavor    String
+  quantity  Int
+  createdAt DateTime @default(now())
+}
+
+model WhatsAppSession {
+  id        String   @id @default(uuid())
+  phone     String   @unique
+  state     String   @default("menu")
+  context   String?
+  lastOrder String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Settings {
+  id              String  @id @default("main")
+  storeName       String  @default("Pod Gorillas")
+  storeEmail      String?
+  storePhone      String?
+  storeWhatsApp   String?
+  storeInstagram  String?
+  deliveryFee     Float   @default(10.0)
+  deliveryCity    String  @default("Matão")
+  cashbackPercent Float   @default(3.0) // % de cashback para clientes cadastrados
+  pixDiscount     Float   @default(0)
+}
