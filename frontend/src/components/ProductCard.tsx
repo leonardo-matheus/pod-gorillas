@@ -10,16 +10,25 @@ export default function ProductCard({ product }: ProductCardProps) {
   const hasStock = product.totalStock > 0;
   const mainImage = product.images?.default || Object.values(product.images || {})[0] || '/products/v400-mix.png';
 
+  // Products with transparent background images
+  const hasTransparentBg = product.slug?.includes('elfbar') || product.slug?.includes('oxbar');
+
   return (
     <Link to={`/produto/${product.slug}`} className="card-hover group">
-      <div className="relative aspect-square bg-dark-800 overflow-hidden">
+      <div className={`relative aspect-square overflow-hidden ${
+        hasTransparentBg
+          ? 'bg-gradient-to-br from-dark-800 via-dark-900 to-dark-950'
+          : 'bg-dark-800'
+      }`}>
         <img
           src={mainImage}
           alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className={`w-full h-full group-hover:scale-105 transition-transform duration-500 ${
+            hasTransparentBg ? 'object-contain p-4' : 'object-cover'
+          }`}
           loading="lazy"
           onError={(e) => {
-            (e.target as HTMLImageElement).src = '/products/vape-generic.png';
+            (e.target as HTMLImageElement).src = '/products/v400-mix.png';
           }}
         />
 

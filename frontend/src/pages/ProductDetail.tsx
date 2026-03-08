@@ -116,6 +116,7 @@ export default function ProductDetail() {
           selectedFlavor={selectedFlavor}
           onFlavorChange={setSelectedFlavor}
           productName={product.name}
+          hasTransparentBg={product.slug?.includes('elfbar') || product.slug?.includes('oxbar')}
         />
 
         {/* Info */}

@@ -7,6 +7,7 @@ interface ImageCarouselProps {
   selectedFlavor: string;
   onFlavorChange: (flavor: string) => void;
   productName: string;
+  hasTransparentBg?: boolean;
 }
 
 export default function ImageCarousel({
@@ -15,6 +16,7 @@ export default function ImageCarousel({
   selectedFlavor,
   onFlavorChange,
   productName,
+  hasTransparentBg = false,
 }: ImageCarouselProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState(0);
@@ -107,7 +109,11 @@ export default function ImageCarousel({
   };
 
   return (
-    <div className="relative aspect-square bg-dark-900 rounded-3xl overflow-hidden group">
+    <div className={`relative aspect-square rounded-3xl overflow-hidden group ${
+      hasTransparentBg
+        ? 'bg-gradient-to-br from-dark-800 via-dark-900 to-dark-950'
+        : 'bg-dark-900'
+    }`}>
       {/* Main Image Container */}
       <div
         ref={containerRef}
@@ -129,7 +135,9 @@ export default function ImageCarousel({
           <img
             src={getImage(selectedFlavor)}
             alt={`${productName} - ${selectedFlavor}`}
-            className="w-full h-full object-cover pointer-events-none"
+            className={`w-full h-full pointer-events-none ${
+              hasTransparentBg ? 'object-contain p-6' : 'object-cover'
+            }`}
             draggable={false}
             onError={(e) => {
               (e.target as HTMLImageElement).src = '/products/v400-mix.png';
