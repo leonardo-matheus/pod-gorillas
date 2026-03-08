@@ -35,13 +35,13 @@ async function main() {
 
   console.log('Criando produtos com imagens reais...');
 
-  // V400 Mix - R$45
+  // V400 Mix - R$135
   const v400mix = await prisma.product.create({
     data: {
       name: 'V400 Mix',
       slug: 'v400-mix',
       description: 'POD descartável V400 Mix com sabores intensos e refrescantes. Design compacto, ideal para o dia a dia.',
-      price: 45.00,
+      price: 135.00,
       puffs: 400,
       images: JSON.stringify({
         default: '/products/v400-mix.png',
@@ -54,13 +54,13 @@ async function main() {
     },
   });
 
-  // V400 - R$42
+  // V400 - R$120
   const v400 = await prisma.product.create({
     data: {
       name: 'V400',
       slug: 'v400',
       description: 'POD descartável V400 clássico. Sabores tradicionais com vapor suave e consistente.',
-      price: 42.00,
+      price: 120.00,
       puffs: 400,
       images: JSON.stringify({
         default: '/products/v400-grape.jpg',
@@ -74,13 +74,13 @@ async function main() {
     },
   });
 
-  // V300 - R$38
+  // V300 - R$125
   const v300 = await prisma.product.create({
     data: {
       name: 'V300',
       slug: 'v300',
       description: 'POD descartável V300 compacto. Perfeito para iniciantes, sabores frutados refrescantes.',
-      price: 38.00,
+      price: 125.00,
       puffs: 300,
       images: JSON.stringify({
         default: '/products/v300.jpeg',
@@ -94,13 +94,13 @@ async function main() {
     },
   });
 
-  // V155 - R$32
+  // V155 - R$100
   const v155 = await prisma.product.create({
     data: {
       name: 'V155',
       slug: 'v155',
       description: 'POD descartável V155 ultra compacto. O mais portátil da linha, cabe no bolso.',
-      price: 32.00,
+      price: 100.00,
       puffs: 155,
       images: JSON.stringify({
         default: '/products/v155.png',
@@ -114,13 +114,13 @@ async function main() {
     },
   });
 
-  // Elfbar GH 23K - R$95
+  // Elfbar GH 23K - R$105
   const elfbarGH = await prisma.product.create({
     data: {
       name: 'Elfbar GH 23K',
       slug: 'elfbar-gh-23k',
       description: 'ELFBAR GH23000 - Premium disposable com 23000 puffs. Triple Mesh Coil, tela digital, bateria 850mAh recarregável. 3 modos: Lite, Smooth e Turbo.',
-      price: 95.00,
+      price: 105.00,
       puffs: 23000,
       images: JSON.stringify({
         default: '/products/elfbar-gh-sakura-grape.webp',
@@ -135,13 +135,13 @@ async function main() {
     },
   });
 
-  // Elfbar TE 30K - R$110
+  // Elfbar TE 30K - R$120
   const elfbarTE = await prisma.product.create({
     data: {
       name: 'Elfbar TE 30K',
       slug: 'elfbar-te-30k',
       description: 'ELFBAR TE30000 - O topo da linha com 30000 puffs. Display intuitivo, bateria 700mAh, carregamento Type-C. Vapor rico e sabor intenso.',
-      price: 110.00,
+      price: 120.00,
       puffs: 30000,
       images: JSON.stringify({
         default: '/products/elfbar-te-guava-kiwi.webp',
@@ -156,13 +156,13 @@ async function main() {
     },
   });
 
-  // Elfbar Ice King 40K - R$130
+  // Elfbar Ice King 40K - R$123
   const elfbarIceKing = await prisma.product.create({
     data: {
       name: 'Elfbar Ice King 40K',
       slug: 'elfbar-ice-king-40k',
       description: 'ELFBAR Ice King 40000 - O rei do gelo! 40000 puffs, 5 níveis de cooling, 3 intensidades de vapor. Bateria 850mAh, 25ml e-liquid, Mesh Coil 1.2Ω.',
-      price: 130.00,
+      price: 123.00,
       puffs: 40000,
       images: JSON.stringify({
         default: '/products/elfbar-ice-king-baja-splash.webp',
@@ -176,13 +176,13 @@ async function main() {
     },
   });
 
-  // Elfbar Trio 40K - R$123 (sem imagem real, usar ice king)
+  // Elfbar Trio 40K - R$120
   const elfbarTrio = await prisma.product.create({
     data: {
       name: 'Elfbar Trio 40K',
       slug: 'elfbar-trio-40k',
       description: 'ELFBAR Trio 40000 - Sistema triplo de ajuste: 4 níveis de Ice, 4 de Sour, 4 de Sweet. Quad Mesh Coil (4 coils), display digital, Type-C fast charging.',
-      price: 123.00,
+      price: 120.00,
       puffs: 40000,
       images: JSON.stringify({
         default: '/products/elfbar-ice-king-dragon-strawnana.webp',
@@ -194,13 +194,13 @@ async function main() {
     },
   });
 
-  // Oxbar Kit 32K - R$115
+  // Oxbar Kit 32K - R$100
   const oxbarKit = await prisma.product.create({
     data: {
       name: 'Oxbar SVOPP 32K',
       slug: 'oxbar-svopp-32k',
       description: 'OXBAR SVOPP 32K - Sistema de pods recarregáveis. 32000 puffs (Normal) / 16000 (Boost). Bateria 1100mAh, 20ml, Dual Mesh Coil. Ajuste de wattage 11W-30W.',
-      price: 115.00,
+      price: 100.00,
       puffs: 32000,
       images: JSON.stringify({
         default: '/products/oxbar-grape-paradise.jpg',
