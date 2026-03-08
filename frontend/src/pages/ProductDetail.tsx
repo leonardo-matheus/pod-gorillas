@@ -1,9 +1,10 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ShoppingBag, Minus, Plus, ArrowLeft, Check, Zap, AlertCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { apiService, Product } from '../services/api';
 import { useCartStore } from '../hooks/useCartStore';
+import ImageCarousel from '../components/ImageCarousel';
 
 // Flavor color mapping for visual effect
 const flavorColors: Record<string, { bg: string; overlay: string }> = {
@@ -108,37 +109,14 @@ export default function ProductDetail() {
       </Link>
 
       <div className="grid md:grid-cols-2 gap-8">
-        {/* Image with flavor color overlay */}
-        <div className="relative aspect-square bg-dark-900 rounded-3xl overflow-hidden group">
-          <img
-            src={product.images?.[selectedFlavor] || product.images?.default || Object.values(product.images || {})[0] || '/products/v400-mix.png'}
-            alt={`${product.name} - ${selectedFlavor}`}
-            className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = '/products/v400-mix.png';
-            }}
-          />
-          {/* Flavor color overlay */}
-          <div
-            className={`absolute inset-0 transition-all duration-300 pointer-events-none ${
-              flavorColors[selectedFlavor]?.overlay || 'bg-gorilla-500/5'
-            }`}
-          />
-          {/* Gradient bottom */}
-          <div
-            className={`absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t ${
-              flavorColors[selectedFlavor]?.bg || 'from-gorilla-500/20'
-            } to-transparent transition-all duration-300`}
-          />
-          {/* Flavor label on image */}
-          {selectedFlavor && (
-            <div className="absolute bottom-4 left-4 right-4">
-              <span className="inline-block px-4 py-2 bg-dark-900/80 backdrop-blur-sm rounded-xl text-sm font-medium border border-white/10">
-                {selectedFlavor}
-              </span>
-            </div>
-          )}
-        </div>
+        {/* Image Carousel with swipe */}
+        <ImageCarousel
+          images={product.images || {}}
+          flavors={product.flavors || []}
+          selectedFlavor={selectedFlavor}
+          onFlavorChange={setSelectedFlavor}
+          productName={product.name}
+        />
 
         {/* Info */}
         <div>
